@@ -26,9 +26,23 @@ showRouter.get("/genres/:genre", async (req, res) => {
 //show using an endpoint.
 showRouter.put("/:id/watched", async (req, res) => {
     const show = await Show.findByPk(req.params.id);
-    console.log(req.body);
     const updatedShow = await show.update({rating: req.body.rating});
     res.send({updatedShow});
+})
+
+//The Show Router should update the status on a specific
+// show from “canceled” to “on-going” or vice versa using an endpoint.
+showRouter.put("/:id/updates", async (req, res) => {
+    const show = await Show.findByPk(req.params.id);
+    const updatedShow = await show.update({status: req.body.status});
+    res.send({updatedShow});
+})
+
+// The Show Router should be able to delete a show.
+showRouter.delete("/:id/delete", async (req, res) => {
+    const show = await Show.findByPk(req.params.id);
+    const deletedShow = await show.destroy();
+    res.send({deletedShow});
 })
 
 module.exports = showRouter;
